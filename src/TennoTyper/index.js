@@ -1,4 +1,5 @@
 "use strict";
+
 class TennoTyper {
 	//global variables
 	c = document.createElement('canvas');

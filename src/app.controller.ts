@@ -1,14 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param} from '@nestjs/common';
 import { AppService } from './app.service';
-/// <reference path="./TennoTyper/index.d.ts" />
-import TennoTyper from './TennoTyper';
+import { Canvas } from 'canvas';
+import TennoTyper from './tenno-typer';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getTennoImage(text: string, language: string): HTMLCanvasElement {
-    return TennoTyper.draw(text, language);
+  @Get('/:text/:language')
+  getTennoImage(@Param('text') text: string, @Param('language') language: string) {
+    var tenno_typer = new TennoTyper();
+    return tenno_typer.draw(text, language);
   }
 }

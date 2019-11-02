@@ -8,14 +8,14 @@ const corpus = new Corpus();
 const orokin = new Orokin();
 
 export class TennoTyper {
-    c: Canvas;
-    ctx: CanvasRenderingContext2D;
-    static background: boolean;
+	c: Canvas;
+	ctx: CanvasRenderingContext2D;
+	static background: boolean;
 	static phonet: boolean;
 	static boldify: boolean;
 	languages = ["orokin", "corpus", "grineer"];
-	
-	constructor(background = false, phonet = true, boldify = false){
+
+	constructor(background = false, phonet = true, boldify = false) {
 		TennoTyper.background = background;
 		TennoTyper.phonet = phonet;
 		TennoTyper.boldify = boldify;
@@ -23,7 +23,7 @@ export class TennoTyper {
 		this.ctx = this.c.getContext('2d');
 	}
 
-    draw(text: string, language: string) {
+	draw(text: string, language: string) {
 		const str = text.toLowerCase();
 		switch (language) {
 			case "corpus":
@@ -41,14 +41,14 @@ export class TennoTyper {
 			console.log("Could not save image:\n" + err)
 		}
 	}
-    
+
     /*
 		isolate each word
 		calculate required canvas size, and draw
 		call required drawing functions
 	*/
 	placeString(string: string, lanClass: Language) {
-        const txt = new Paragraph(string, lanClass);
+		const txt = new Paragraph(string, lanClass);
 
 		this.c.width = Math.ceil(txt.w);
 		this.c.height = Math.ceil(txt.h);

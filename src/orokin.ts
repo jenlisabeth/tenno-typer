@@ -2,62 +2,62 @@ import { Image, CanvasRenderingContext2D } from 'canvas';
 import { Language } from "./language";
 import { TennoTyper } from "./tenno-typer";
 
-export class Orokin extends Language{
-    currWord: string;
-    rot: number;
-    dim: number[];
-    misc: string[];
-    currWordArray: string[];
-    constructor() {
-        super();
-        this.folder = "./images/orokin/";
-	    this.pre = 't';
-	    this.ext = ".png";
-	    this.recalc = true; // whether recalculations are required
-	    this.dim = [0, 0, 0, 0]; // array with: Width, height, drawline offset, startpoint offset
-	    this.centered = true;
-	    this.rot = 24.3 * Math.PI / 180;
-	    this.spacing = {
-	    	LineHeight: 15,
-	    	SpaceWidth: 20,
-	    	LetterSpacing: 0,
+export class Orokin extends Language {
+	currWord: string;
+	rot: number;
+	dim: number[];
+	misc: string[];
+	currWordArray: string[];
+	constructor() {
+		super();
+		this.folder = "./images/orokin/";
+		this.pre = 't';
+		this.ext = ".png";
+		this.recalc = true; // whether recalculations are required
+		this.dim = [0, 0, 0, 0]; // array with: Width, height, drawline offset, startpoint offset
+		this.centered = true;
+		this.rot = 24.3 * Math.PI / 180;
+		this.spacing = {
+			LineHeight: 15,
+			SpaceWidth: 20,
+			LetterSpacing: 0,
 		};
 		this.currWordArray = [];
-	    this.imgs = [];
-	    this.numbers = '0123456789'.split('');
-	    this.vowels = ['a', 'e', 'i', 'o', 'u', 'w', 'y', 'ee', 'aw', 'oo', 'ae', 'aye', 'ow'];
-	    this.consonants = ['th', 'dh', 'sh', 'zh', 'ch', 'kh', 'ng', 'p', 'b', 't', 'd', 's', 'z', 'j', 'k', 'g', 'f', 'v', 'm', 'n', 'h', 'r', 'l'];
-        this.misc = [...this.numbers, ',', '.', '-']
-        this.special_chars = ["Period", "Comma", "Hyphen"]
+		this.imgs = [];
+		this.numbers = '0123456789'.split('');
+		this.vowels = ['a', 'e', 'i', 'o', 'u', 'w', 'y', 'ee', 'aw', 'oo', 'ae', 'aye', 'ow'];
+		this.consonants = ['th', 'dh', 'sh', 'zh', 'ch', 'kh', 'ng', 'p', 'b', 't', 'd', 's', 'z', 'j', 'k', 'g', 'f', 'v', 'm', 'n', 'h', 'r', 'l'];
+		this.misc = [...this.numbers, ',', '.', '-']
+		this.special_chars = ["Period", "Comma", "Hyphen"]
 		this.chars = [...this.numbers, ...this.vowels, ...this.consonants, ...this.special_chars];
-        this.get_images();
-    }
-    get_images(){
-        for (var char of this.chars) {
-            switch (char) {
-                case 'Comma':
-                    this.imgs[','] = new Image();
-                    this.imgs[','].src = this.folder + this.pre + char + this.ext;
-                    char = ',';
-                    break;
-                case 'Hyphen':
-                    this.imgs['-'] = new Image();
-                    this.imgs['-'].src = this.folder + this.pre + char + this.ext;
-                    char = '-';
-                    break;
-                case 'Period':
-                    this.imgs['.'] = new Image();
-                    this.imgs['.'].src = this.folder + this.pre + char + this.ext;
-                    char = '.';
-                    break;
-                default:
-                    this.imgs[char] = new Image();
-                    this.imgs[char].src = this.folder + this.pre + char + this.ext;
-            }
-        }
+		this.get_images();
+	}
+	get_images() {
+		for (var char of this.chars) {
+			switch (char) {
+				case 'Comma':
+					this.imgs[','] = new Image();
+					this.imgs[','].src = this.folder + this.pre + char + this.ext;
+					char = ',';
+					break;
+				case 'Hyphen':
+					this.imgs['-'] = new Image();
+					this.imgs['-'].src = this.folder + this.pre + char + this.ext;
+					char = '-';
+					break;
+				case 'Period':
+					this.imgs['.'] = new Image();
+					this.imgs['.'].src = this.folder + this.pre + char + this.ext;
+					char = '.';
+					break;
+				default:
+					this.imgs[char] = new Image();
+					this.imgs[char].src = this.folder + this.pre + char + this.ext;
+			}
+		}
 		console.log("Orokin images loaded.");
-    }
-    placeWord(ctx: CanvasRenderingContext2D, word: string) { // place centered images
+	}
+	placeWord(ctx: CanvasRenderingContext2D, word: string) { // place centered images
 		console.log("Placing Orokin word for: " + word);
 		if (this.recalc || this.currWord != word) {
 			this.currWord = word;
@@ -154,26 +154,26 @@ export class Orokin extends Language{
 			}
 			xOff += this.spacing.LetterSpacing;
 		}
-    }
-    getWordLength(word: string): number {
+	}
+	getWordLength(word: string): number {
 		if (this.recalc || word != this.currWord) {// so I dont have to phoneticize several times on same word
 			this.dim = this.getWordDimensions(word);
 		}
 		return this.dim[0];
-    }
-    getWordHeight(word: string): number {
+	}
+	getWordHeight(word: string): number {
 		if (this.recalc || word != this.currWord) {// so I dont have to phoneticize several times on same word
 			this.dim = this.getWordDimensions(word);
 		}
 		return this.dim[1];
-    }
-    getWordHeightOffset(word: string): number {
+	}
+	getWordHeightOffset(word: string): number {
 		if (this.recalc || word != this.currWord) {// so I dont have to phoneticize several times on same word
 			this.dim = this.getWordDimensions(word);
 		}
 		return this.dim[2];
-    }
-    getWordDimensions(word: string): number[] {
+	}
+	getWordDimensions(word: string): number[] {
 		if (this.recalc || this.currWord != word) {
 			this.currWord = word;
 			this.currWordArray = this.phoneticize(word);
@@ -293,8 +293,8 @@ export class Orokin extends Language{
 		netW -= this.spacing.LetterSpacing; // account for extra LetterSpacing
 		var out = [netW + tail, uHei + dHei, uHei, staW];
 		return out; // return array containing width, height, drawline offset
-    }
-    literal(word: string): string[] {
+	}
+	literal(word: string): string[] {
 		var array = [];
 		var a = 0;
 		while (a < word.length) {
@@ -327,8 +327,8 @@ export class Orokin extends Language{
 			}
 		}
 		return array;
-    }
-    phoneticize(word: string): string[] { // return array of phoneticized chars, according to phoneticizeGuide.txt
+	}
+	phoneticize(word: string): string[] { // return array of phoneticized chars, according to phoneticizeGuide.txt
 		var wordsArray = [];
 		if (!TennoTyper.phonet) {
 			wordsArray = this.literal(word);

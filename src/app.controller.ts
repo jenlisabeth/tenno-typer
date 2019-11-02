@@ -1,10 +1,10 @@
-import { Controller, Get, Param} from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { TennoTyper } from './tenno-typer';
 
 @Controller()
 export class AppController {
   tenno_typer: TennoTyper;
-  
+
   constructor() {
     this.tenno_typer = new TennoTyper();
   }

@@ -1,9 +1,9 @@
-const { Image, createCanvas } = require('canvas')
+import { Image, createCanvas } from 'canvas';
+const fs = require('file-system');
 
-export default class TennoTyper {
+export class TennoTyper {
     c: any;
     ctx: any;
-    offset = {xOffset: 0, yOffset: 0};
     static background: boolean;
 	static phonet: boolean;
 	static boldify: boolean;
@@ -18,7 +18,7 @@ export default class TennoTyper {
 	}
 
     draw(text: string, language: string) {
-		var str = text.toLowerCase();
+		const str = text.toLowerCase();
 		switch (language) {
 			case "corpus":
 				this.placeString(str, corpus);
@@ -34,8 +34,7 @@ export default class TennoTyper {
 	
 	saveImg() {
 		try {
-			var out = this.c.toDataURL();
-			return "<img src='" + out + "' alt='from canvas'/>";
+			return "<img src='" + this.c.toDataURL() + "' alt='from canvas'/>";
 		} catch (err) {
 			console.log("Could not save image:\n" + err)
 		}
@@ -47,7 +46,7 @@ export default class TennoTyper {
 		call required drawing functions
 	*/
 	placeString(string, lanClass) {
-        var txt = new Paragraph(string, lanClass);
+        const txt = new Paragraph(string, lanClass);
 
 		this.c.width = Math.ceil(txt.w);
 		this.c.height = Math.ceil(txt.h);
@@ -88,15 +87,6 @@ export default class TennoTyper {
 	}
 }
 
-var find = (item: any, array: any) => {
-    for (var a = 0; a < array.length; a++) {
-        if (item == array[a]) {
-            return true;
-        }
-    }
-    return false;
-}
-
 class Word{ // basic word class
 	str: string;
     w: number;
@@ -116,7 +106,7 @@ class Line{
 	h = 0;
 	yIM = 0; // line l initial offset maximum
 	constructor(str: string, lanClass: any){
-	    var array = str.split(' '); // make array of words for each line
+	    const array = str.split(' '); // make array of words for each line
 	    // instanciate words array and line width/height
 	    for (var a = 0; a < array.length; a++) {
 	        this.words[a] = new Word(array[a], lanClass.getWordLength(array[a]), lanClass.getWordHeight(array[a]), lanClass.getWordHeightOffset(array[a]));
@@ -142,7 +132,7 @@ class Paragraph{
 	w = 0;
 	h = 0;
 	constructor(str: string, lanClass: any) {
-	    var array = str.split('\n'); // make array of lines for the paragraph
+	    const array = str.split('\n'); // make array of lines for the paragraph
 	    //instansiate lines array and canvas width and height
 	    for (var a = 0; a < array.length; a++) {
 	        this.lines[a] = new Line(array[a], lanClass);
@@ -155,9 +145,18 @@ class Paragraph{
 	}
 }
 
+var find = (item: any, array: any) => {
+	for (var a = 0; a < array.length; a++) {
+		if (item == array[a]) {
+			return true;
+		}
+	}
+	return false;
+}
+
 //grineer
 /*-------------------------------------------------*/
-var grineer = new function (){
+const grineer = new function (){
 	this.folder = "./images/grineer/";
 	this.pre = 'g';
 	this.ext = ".png";
@@ -168,7 +167,9 @@ var grineer = new function (){
 		LetterSpacing: 5,
 	};
 	this.imgs = [];
-	this.chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'y', 'z', "Question", "Period", "Comma", "Hash", "At", '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+	this.alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+	this.numbers = '0123456789'.split('');
+	this.chars = [...this.alphabet, ...this.numbers, "Question", "Period", "Comma", "Hash", "At"];
 	for (var a = 0; a < this.chars.length; a++) { // gets images and puts them in imgs table
 		switch (this.chars[a]) {
 			case 'Question':
@@ -212,7 +213,6 @@ var grineer = new function (){
 		var len = 0;
 		var img;
 		for (var letter in word) {
-			//console.log("word:" + word + " letter:" + letter + " letterVal:" + word[letter] + " img:" + this.imgs[word[letter]] + " imgLen:" + this.imgs[word[letter]].width);
 			img = this.imgs[word[letter]];
 			if (img != undefined) {
 				len += (img.width + this.spacing.LetterSpacing);
@@ -244,7 +244,7 @@ var grineer = new function (){
 
 //corpus
 /*-------------------------------------------------*/
-var corpus = new function () {
+const corpus = new function () {
 	this.folder = "./images/corpus/";
 	this.pre = 'c';
 	this.ext = ".png";
@@ -256,7 +256,9 @@ var corpus = new function () {
 	};
 	this.imgs = [];
 	this.bImgs = [];
-	this.chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'y', 'z', '0', '1'];
+	this.alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+	this.numbers = '01'.split('');
+	this.chars = [...this.alphabet, ...this.numbers];
 	for (var index = 0; index < this.chars.length; index += 1) { // gets images and puts them in imgs table
 		this.imgs[this.chars[index]] = new Image();
 		this.imgs[this.chars[index]].src = this.folder + this.pre + this.chars[index] + this.ext;
@@ -287,7 +289,6 @@ var corpus = new function () {
 			imgs = this.bImgs;
 		}
 		for (var letter in word) {
-			//console.log("word:" + word + " letter:" + letter + " letterVal:" + word[letter] + " img:" + this.imgs[word[letter]] + " imgLen:" + this.imgs[word[letter]].width);
 			img = imgs[word[letter]];
 			if (img != undefined) {
 				len += (img.width + this.spacing.LetterSpacing);
@@ -317,7 +318,7 @@ var corpus = new function () {
 
 //tenno
 /*-------------------------------------------------*/
-var tenno = new function () {
+const tenno = new function () {
 	this.folder = "./images/tenno/";
 	this.pre = 't';
 	this.ext = ".png";
@@ -332,10 +333,12 @@ var tenno = new function () {
 		SpaceWidth: 20,
 		LetterSpacing: 0,
 	};
-	this.vowels = ['a', 'e', 'i', 'o', 'u', 'w', 'y', 'ee', 'aw', 'oo', 'ae', 'aye', 'ow'];
-	this.misc = [',', '.', '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 	this.imgs = [];
-	this.chars = ['aye', 'ae', 'ow', 'aw', 'ee', 'i', 'e', 'a', 'u', 'oo', 'o', 'th', 'dh', 'sh', 'zh', 'ch', 'kh', 'ng', 'p', 'b', 't', 'd', 's', 'z', 'j', 'k', 'g', 'f', 'v', 'm', 'n', 'h', 'r', 'l', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', "Period", "Comma", "Hyphen"];
+	this.numbers = '0123456789'.split('');
+	this.vowels = ['a', 'e', 'i', 'o', 'u', 'w', 'y', 'ee', 'aw', 'oo', 'ae', 'aye', 'ow'];
+	this.consonants = ['th', 'dh', 'sh', 'zh', 'ch', 'kh', 'ng', 'p', 'b', 't', 'd', 's', 'z', 'j', 'k', 'g', 'f', 'v', 'm', 'n', 'h', 'r', 'l'];
+	this.misc = [...this.numbers, ',', '.', '-']
+	this.chars = [...this.numbers, ...this.vowels, ...this.consonants, "Period", "Comma", "Hyphen"];
 	for (var a = 0; a < this.chars.length; a++) {
 		switch (this.chars[a]) {
 			case 'Comma':
@@ -906,9 +909,7 @@ var tenno = new function () {
 						wordsArray.push(word[a]);
 				}
 			}
-			//console.log(word[a] + " -> " + wordsArray[wordsArray.length-1]);
 		}
-		//console.log(" ");
 		var a = 0; // remove duplicates and any undefined chars from the array
 		while (a < wordsArray.length) {
 			if (!find(wordsArray[a], this.misc)) {

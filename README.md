@@ -10,7 +10,7 @@
 
 # Current language implementations and their status
 | Language | Status   | In Depth Status           |
-| ------   |:--------:| -------------------------:|
+| -------- |:--------:|:-------------------------:|
 | Corpus   | COMPLETE |                           |
 | Grineer  | COMPLETE |                           |
 | Orokin   | COMPLETE | (LITERAL/PHONETIC/ALIGNED)|
@@ -19,6 +19,6 @@
 
 # Todo's
 | Language | Todo                                                     |
-| ------   | --------------------------------------------------------:|
+| -------- |:--------------------------------------------------------:|
 | Solaris  | Automatic phonetization                                  |
 | Ostron   | Automatic phonetization, alignment (horizontal/vertical) |

@@ -31,7 +31,6 @@ export class Corpus extends Language {
 		console.log("Corpus images loaded.");
 	}
 	placeWord(ctx: CanvasRenderingContext2D, word: string) { // place left aligned images
-		console.log("Placing Corpus word for: " + word);
 		var offset = 0;
 		var imgs = this.imgs;
 		if (TennoTyper.boldify) {

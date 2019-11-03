@@ -51,7 +51,6 @@ export class Grineer extends Language {
         console.log("Grineer images loaded.");
     }
     placeWord(ctx: CanvasRenderingContext2D, word: string) { // place left aligned images
-        console.log("Placing Grineer word for: " + word);
         var offset = 0;
         for (var letter of word) {
             var img = this.imgs[letter];

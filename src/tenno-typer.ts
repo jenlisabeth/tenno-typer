@@ -3,9 +3,11 @@ import { Grineer } from './grineer';
 import { Corpus } from './corpus';
 import { Orokin } from './orokin';
 import { Paragraph, Language } from './language';
+import { Solaris } from './solaris';
 const grineer = new Grineer();
 const corpus = new Corpus();
 const orokin = new Orokin();
+const solaris = new Solaris();
 
 export class TennoTyper {
 	c: Canvas;
@@ -13,7 +15,7 @@ export class TennoTyper {
 	static background: boolean;
 	static phonet: boolean;
 	static boldify: boolean;
-	languages = ["orokin", "corpus", "grineer"];
+	languages = ["orokin", "corpus", "grineer", "solaris"];
 
 	constructor(background = false, phonet = true, boldify = false) {
 		TennoTyper.background = background;
@@ -34,6 +36,8 @@ export class TennoTyper {
 				break;
 			case "orokin":
 				this.placeString(str, orokin);
+			case "solaris":
+				this.placeString(str, solaris);
 		}
 		try {
 			return "<img src='" + this.c.toDataURL() + "' alt='from canvas'/>";

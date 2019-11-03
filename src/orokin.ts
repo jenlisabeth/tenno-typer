@@ -58,7 +58,6 @@ export class Orokin extends Language {
 		console.log("Orokin images loaded.");
 	}
 	placeWord(ctx: CanvasRenderingContext2D, word: string) { // place centered images
-		console.log("Placing Orokin word for: " + word);
 		if (this.recalc || this.currWord != word) {
 			this.currWord = word;
 			this.currWordArray = this.phoneticize(word);

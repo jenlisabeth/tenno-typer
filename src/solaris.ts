@@ -28,35 +28,41 @@ export class Solaris extends Language {
         this.get_images();
     }
     get_images() {
-        for (var char of this.chars) { // gets images and puts them in imgs table
-            switch (char) {
+        for (var idx = 0; idx < this.chars.length; idx++) { // gets images and puts them in imgs table
+            switch (this.chars[idx]) {
                 case 'Question':
                     this.imgs['?'] = new Image();
-                    this.imgs['?'].src = this.folder + this.pre + char + this.ext;
+                    this.imgs['?'].src = this.folder + this.pre + this.chars[idx] + this.ext;
+                    this.chars[idx] = '?';
                     break;
                 case 'Comma':
                     this.imgs[','] = new Image();
-                    this.imgs[','].src = this.folder + this.pre + char + this.ext;
+                    this.imgs[','].src = this.folder + this.pre + this.chars[idx] + this.ext;
+                    this.chars[idx] = ',';
                     break;
                 case 'Period':
                     this.imgs['.'] = new Image();
-                    this.imgs['.'].src = this.folder + this.pre + char + this.ext;
+                    this.imgs['.'].src = this.folder + this.pre + this.chars[idx] + this.ext;
+                    this.chars[idx] = '.';
                     break;
                 case 'Apostrophe':
-                    this.imgs['Apostrophe'] = new Image();
-                    this.imgs['Apostrophe'].src = this.folder + this.pre + char + this.ext;
+                    this.imgs['\''] = new Image();
+                    this.imgs['\''].src = this.folder + this.pre + this.chars[idx] + this.ext;
+                    this.chars[idx] = '\'';
                     break;
                 case 'Colon':
                     this.imgs['-'] = new Image();
-                    this.imgs['-'].src = this.folder + this.pre + char + this.ext;
+                    this.imgs['-'].src = this.folder + this.pre + this.chars[idx] + this.ext;
+                    this.chars[idx] = '-';
                     break;
                 case 'Exclamation':
                     this.imgs['!'] = new Image();
-                    this.imgs['!'].src = this.folder + this.pre + char + this.ext;
+                    this.imgs['!'].src = this.folder + this.pre + this.chars[idx] + this.ext;
+                    this.chars[idx] = '!';
                     break;
                 default:
-                    this.imgs[char] = new Image();
-                    this.imgs[char].src = this.folder + this.pre + char + this.ext;
+                    this.imgs[this.chars[idx]] = new Image();
+                    this.imgs[this.chars[idx]].src = this.folder + this.pre + this.chars[idx] + this.ext;
             }
         }
         console.log("Solaris images loaded.");
@@ -118,9 +124,6 @@ export class Solaris extends Language {
 		while (a < word.length) {
 			var found = false;
 			switch (word[a]) {
-                case '\'':
-                    array.push('Apostrophe');
-                    break;
 				case 'y':
 					array.push('ee');
 					break;
@@ -130,87 +133,65 @@ export class Solaris extends Language {
                 case 'e':
                     if (!(word[a + 1] == 'h')) {
                         array.push('ee');
-                        console.log("E was single so we pushed.")
                         break;
                     }
-                    console.log("E was not single, let's check if it is valid.")
                 case 'i':
                     if (!(word[a + 1] == 'h')) {
                         array.push('ii');
-                        console.log("I was single so we pushed.")
                         break;
                     }
-                    console.log("I was not single, let's check if it is valid.")
                 case 'o':
                     if (!(word[a + 1] == 'h')) {
                         array.push('oo');
-                        console.log("O was single so we pushed.")
                         break;
                     }
-                    console.log("O was not single, let's check if it is valid.")
                 case 'u':
                     if (!(word[a + 1] == 'h')) {
                         array.push('uu');
-                        console.log("U was single so we pushed.")
                         break;
                     }
-                    console.log("U was not single, let's check if it is valid.")
                 case 'k':
                     if (!(word[a + 1] == 'h')) {
                         array.push('kk');
-                        console.log("K was single so we pushed.")
                         break;
                     }
-                    console.log("K was not single, let's check if it is valid.")
                 case 's':
                     if (!(word[a + 1] == 'h')) {
                         array.push('ss');
-                        console.log("S was single so we pushed.")
                         break;
                     }
-                    console.log("S was not single, let's check if it is valid.")
                 case 't':
                     if (!(word[a + 1] == 'h')) {
                         array.push('tt');
-                        console.log("T was single so we pushed.")
                         break;
                     }
-                    console.log("T was not single, let's check if it is valid.")
                 case 'z':
                     if (!(word[a + 1] == 'h')) {
                         array.push('zz');
-                        console.log("Z was single so we pushed.")
                         break;
                     }
-                    console.log("Z was not single, let's check if it is valid.")
                 case 'a':
                     var checkers = ['h', 'w']
                     if (!(checkers.indexOf(word[a + 1]) > -1)) {
                         if (word[a + 1] != 'l' || word[a + 1] == 'l' && word[a + 2] != 'w') {
                             array.push('aa');
-                            console.log("A was single so we pushed.")
                             break;
                         }
                     }
-                    console.log("A was not single, let's check if it is valid.")
                 case 'n':
                     if (word[a] == 'n') {
                         if (!(word[a + 1] == 'g')) {
                             array.push('nn');
-                            console.log("N was single so we pushed.")
                             break;
                         }
                     }
-                    console.log("N was not single, let's check if it is valid.")
                 case 'd':
                     if (word[a] == 'd') {
                         if (word[a + 1] != 't' || word[a + 1] == 't' && word[a + 2] != 'h') {
                             array.push('dd');
-                            console.log("D was single so we pushed.")
                             break;
                         }
                     }
-                    console.log("D was not single, let's check if it is valid.")
 				default:
 					for (var b = 0; b < this.chars.length; b++) {
 						var test: number = word.indexOf(this.chars[b], a);

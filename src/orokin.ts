@@ -33,26 +33,26 @@ export class Orokin extends Language {
 		this.get_images();
 	}
 	get_images() {
-		for (var char of this.chars) {
-			switch (char) {
+		for (var idx = 0; idx < this.chars.length; idx++) {
+			switch (this.chars[idx]) {
 				case 'Comma':
 					this.imgs[','] = new Image();
-					this.imgs[','].src = this.folder + this.pre + char + this.ext;
-					char = ',';
+					this.imgs[','].src = this.folder + this.pre + this.chars[idx] + this.ext;
+					this.chars[idx] = ',';
 					break;
 				case 'Hyphen':
 					this.imgs['-'] = new Image();
-					this.imgs['-'].src = this.folder + this.pre + char + this.ext;
-					char = '-';
+					this.imgs['-'].src = this.folder + this.pre + this.chars[idx] + this.ext;
+					this.chars[idx] = '-';
 					break;
 				case 'Period':
 					this.imgs['.'] = new Image();
-					this.imgs['.'].src = this.folder + this.pre + char + this.ext;
-					char = '.';
+					this.imgs['.'].src = this.folder + this.pre + this.chars[idx] + this.ext;
+					this.chars[idx] = '.';
 					break;
 				default:
-					this.imgs[char] = new Image();
-					this.imgs[char].src = this.folder + this.pre + char + this.ext;
+					this.imgs[this.chars[idx]] = new Image();
+					this.imgs[this.chars[idx]].src = this.folder + this.pre + this.chars[idx] + this.ext;
 			}
 		}
 		console.log("Orokin images loaded.");

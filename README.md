@@ -9,12 +9,12 @@
 6. To test simply do a GET to '/{text}/{language}' and the translation will be returned in base64/png format
 
 # Current language implementations and their status
-Corpus  -   COMPLETE
-Grineer -   COMPLETE
-Orokin  -   COMPLETE    (LITERAL/PHONETIC/ALIGNED)
-Solaris -   PARTIAL     (LITERAL)
-Ostron  -   PARTIAL     (LITERAL)
+|Corpus  | COMPLETE |                           |
+|Grineer | COMPLETE |                           |
+|Orokin  | COMPLETE | (LITERAL/PHONETIC/ALIGNED)|
+|Solaris | PARTIAL  | (LITERAL)                 |
+|Ostron  | PARTIAL  | (LITERAL)                 |
 
 # Todo's
-Solaris -   Automatic phonetization
-Ostron  -   Automatic phonetization, alignment (horizontal/vertical)
+| Solaris | Automatic phonetization                                 |
+| Ostron  | Automatic phonetization, alignment (horizontal/vertical)|

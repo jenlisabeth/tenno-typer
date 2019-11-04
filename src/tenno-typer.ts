@@ -47,7 +47,7 @@ export class TennoTyper {
 				break;
 		}
 		try {
-			return "<img src='" + this.c.toDataURL() + "' alt='from canvas'/>";
+			return "<img src='" + this.c.toDataURL() + "' alt='Translated Word'/>";
 		} catch (err) {
 			console.log("Could not save image:\n" + err)
 		}
